@@ -1,0 +1,22 @@
+<h2>注文履歴詳細</h2>
+<table>
+  <tbody>
+    <tr>
+      <td>購入者　　　　　<%= @customer.id %></td>
+      <td>注文日　　　　　<%= l @order.created_at %></td>
+      <td>配送先　　　　　<%= @customer.address %></td>
+      <td>支払方法　　　　<%= @order.payment %></td>
+      <td>注文ステータス　<%= f.select :status_method, options_from_collection_for_select(Order.status_methods, :id, :name)　%> </td>
+    </tr>
+  </tbody>
+</table>
+<%= render 'order_details/order', order_details: @order_details %>
+<table>
+  <tbody>
+    <tr>
+      <td>商品合計　　　<%= @order.price %>円</td>
+      <td>送料　　　　　<%= @order.postage %>円</td>
+      <td>請求金額合計　<%= @order.price + @order.postage %>円</td>
+    </tr>
+  </tbody>
+</table>

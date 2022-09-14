@@ -1,0 +1,21 @@
+<h3>ジャンル検索</h3>
+<% @genres.each do |genre| %>
+  <div><%= genre.name %></div>
+<% end %>
+
+<h2>商品一覧(全x件)</h2>
+  <table>
+    <% @items.each do |item| %>
+    <tbody>
+      <tr>
+        <td>
+          <%= link_to(publics_item_path(item.id)) do %>
+            <%= image_tag item.get_image(200,200) %>
+          <% end %>
+        </td>
+        <td><%= item.name %></td>
+        <td>￥<%= item.price %></td>
+      </tr>
+    </tbody>
+    <% end %>
+  </table>

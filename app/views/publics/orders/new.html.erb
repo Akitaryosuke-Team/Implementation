@@ -1,0 +1,42 @@
+<h2>注文情報入力</h2>
+  <%= form_with model: @order, url: publics_orders_path, method: :post do |f| %>
+
+  <h3>支払方法</h3>
+    <div class="field">
+      <%= f.radio_button :payment, :credit_card, checked: true %>
+      <%= f.label :"クレジットカード" %>
+      <%= f.radio_button :payment, :transfer, checked: true %>
+      <%= f.label :"銀行振込" %>
+    </div>
+
+  <h3>お届け先</h3>
+    <div class="mx-auto container">
+  
+      <div class="field">
+        <%= f.radio_button :address, :current, checked: true %>
+        <%= f.label :"ご自身の住所" %>
+        <div>
+          <%= order.current_customer.address %>
+        </div>
+        <%= f.radio_button :address, :registered, checked: true %>
+        <%= f.label :"登録済み住所から選択" %>
+        <div>
+          <%= f.collection_select :address, Order.all, :id, :name %>
+        </div>
+        <%= f.radio_button :address, :new, checked: true %>
+        <%= f.label :"新しいお届け先" %>
+        <div class="form-group form-inline row">
+          <%= f.label :"郵便番号(ハイフンなし)" %>
+          <%= f.text_field :postal_code, class: "col-auto form-control form-control-lg w-50" %>
+          <%= f.label :"住所" %>
+          <%= f.text_field :address, class: "col-auto form-control form-control-lg w-120" %>
+          <%= f.label :"宛名" %>
+          <%= f.text_field :name, class: "col-auto form-control form-control-lg w-50" %>
+        </div>
+      </div>
+    </div>
+    <div class="actions text-right col-9">
+      <%= f.submit "確認画面へ進む", class: "btn btn-success mx-auto btn-lg" %>
+    </div>
+
+  <% end %>

@@ -1,0 +1,15 @@
+<h3>ジャンル検索</h3>
+<% @genres.each do |genre| %>
+  <div><%= genre.name %></div>
+<% end %>
+
+<div><%= image_tag @item.get_image(200,200) %></div>
+<div><%= @item.name %></div>
+<div><%= @item.introduction %></div>
+<div><%= @item.price %></div>
+<select>
+  <option>1</option>
+  <option>2</option>
+  <option>3</option>
+</select>
+<div><%= link_to "カートに入れる" %></div>

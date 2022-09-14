@@ -1,0 +1,43 @@
+<h2>配送先登録/一覧</h2>
+<div class="mx-auto container">
+
+  <div class="field col-6">
+    <%= f.label :郵便番号 %>
+    <%= f.text_field :postal_code, class: "col-auto form-control form-control-lg w-50" %>
+  </div>
+
+  <div class="field col-6">
+    <%= f.label :住所 %>
+    <%= f.text_field :address, class: "col-auto form-control form-control-lg w-100" %>
+  </div>
+
+  <div class="field col-3">
+    <%= f.label:名前 %>
+    <%= f.text_field :name, autofocus: true, class: "col-lg-offset-3 form-control form-control-lg w-50" %>
+  </div>
+
+  <div class="actions text-right col-9">
+    <%= f.submit "新規登録", class: "btn btn-success mx-auto btn-lg" %>
+  </div>
+</div>
+<table>
+  <thead>
+    <tr>
+      <th>郵便番号</th>
+      <th>住所</th>
+      <th>宛名</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @address.each do |address| %>
+    <tr>
+      <td><%= address.postal_code %></td>
+      <td><%= address.address %></td>
+      <td><%= address.name %></td>
+      <td><%= link_to "編集する", edit_address_path(@address.id), class: 'btn btn-success edit_address_#{@address.id}'%>
+          <%= link_to "削除する", address_path(@address.id), method: :delete, "deta-confirm" => "本当に消しますか？", class: 'btn btn-danger destroy_address_#{@address.id}' %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

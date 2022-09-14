@@ -1,0 +1,16 @@
+<h2>商品詳細</h2>
+<div>
+  <%= image_tag @item.get_image(200,200) %>
+</div>
+<table>
+  <tbody>
+    <tr>
+      <td>商品名　　　　　<%= @item.name %></td><tr>
+      <td>商品説明　　　　<%= @item.introduction %></td><tr>
+      <td>ジャンル　　　　<%= @genre.name %></td><tr>
+      <td>税込価格(税抜価格)　　　　<%= @item.price %>(<%= @item.price %>)</td><tr>
+      <td>販売ステータス　<%= @item.is_active ? '販売中' : '販売停止中' %></td><tr>
+    </tr>
+  </tbody>
+</table>
+<%= link_to "商品編集", edit_admins_item_path %>
