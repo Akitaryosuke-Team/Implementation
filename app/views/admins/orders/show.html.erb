@@ -1,22 +1,82 @@
-<h2>注文履歴詳細</h2>
-<table>
-  <tbody>
-    <tr>
-      <td>購入者　　　　　<%= @customer.id %></td>
-      <td>注文日　　　　　<%= l @order.created_at %></td>
-      <td>配送先　　　　　<%= @customer.address %></td>
-      <td>支払方法　　　　<%= @order.payment %></td>
-      <td>注文ステータス　<%= f.select :status_method, options_from_collection_for_select(Order.status_methods, :id, :name)　%> </td>
-    </tr>
-  </tbody>
-</table>
-<%= render 'order_details/order', order_details: @order_details %>
-<table>
-  <tbody>
-    <tr>
-      <td>商品合計　　　<%= @order.price %>円</td>
-      <td>送料　　　　　<%= @order.postage %>円</td>
-      <td>請求金額合計　<%= @order.price + @order.postage %>円</td>
-    </tr>
-  </tbody>
-</table>
+<div class="container" style="margin-top:30px;">
+  <div class="offset-1 d-flex justify-content-center font-weight-bold" style="background-color:#f5f5f5; font-size:25px; margin-bottom:30px; height:40px; width:220px;">
+    注文履歴詳細
+  </div>
+  <%= form_with model: @order, url: admins_order_path, method: :patch do |f| %>
+
+    <div class="form-group form-inline row lead">
+      <div class="col-2 font-weight-bold">購入者</div>
+      <div><%= @order.customer.first_name + @order.customer.last_name %></div>
+    </div>
+    <div class="form-group form-inline row lead">
+      <div class="col-2 font-weight-bold">注文日</div>
+      <div><%= @order.created_at.strftime("%Y/%m/%d") %></div>
+    </div>
+    <div class="form-group form-inline row d-flex align-items-start lead">
+      <div class="col-2 font-weight-bold">配送先</div>
+      <div>
+        <div><%= @order.address %></div>
+        <div><%= @order.name %></div>
+      </div>
+    </div>
+    <div class="form-group form-inline row lead">
+      <div class="col-2 font-weight-bold">支払方法</div>
+      <div><%= Order.payment_methods_i18n[@order.payment_method] %></div>
+    </div>
+    <div class="form-group form-inline row lead">
+      <div class="col-2 font-weight-bold">注文ステータス</div>
+      <div><%= f.select :status_method, options_for_select(Order.status_methods_i18n.invert), include_blank: Order.status_methods_i18n[@order.status_method] %></div>
+      <div><%= f.submit '更新', class: "btn btn-success", style: "margin-left:50px;" %></div>
+    </div>
+  <% end %>
+
+  <%= form_with model: @order_details, url: admins_order_detail_path, method: :patch do |f| %>
+    <div class="row align-items-end">
+      <table class="col-8 table table-borderless border-bottom border-top" style="margin-top:50px;">
+        <thead>
+          <tr>
+            <th class="col-4 border-dark font-weight-bold bg-light" style="vertical-align:middle;">商品名</th>
+            <th class="col-auto border-dark font-weight-bold bg-light" style="vertical-align:middle;">単価（税込）</th>
+            <th class="col-auto border-dark font-weight-bold bg-light" style="vertical-align:middle;">数量</th>
+            <th class="col-auto border-dark font-weight-bold bg-light" style="vertical-align:middle;">小計</th>
+            <th class="col-auto border-dark font-weight-bold bg-light" style="vertical-align:middle;">制作ステータス</th>
+            <th class="col-auto border-dark font-weight-bold bg-light" style="vertical-align:middle;"></th>
+          </tr>
+        </thead>
+
+        <tbody>
+            <% @order_details.each do |order_detail| %>
+            <tr>
+              <td style="vertical-align:middle;"><%= order_detail.item.name %></td>
+              <td style="vertical-align:middle;"><%= order_detail.add_tax_price.to_s(:delimited) %></td>
+              <td style="vertical-align:middle;"><%= order_detail.amount %></td>
+              <td style="vertical-align:middle;"><%= (order_detail.add_tax_price * order_detail.amount).to_s(:delimited) %></td>
+              <td style="vertical-align:middle;">
+                <% if @order.status_method == 1 %>
+                  <%= f.select :making_status_method == 1, options_for_select(OrderDetail.making_status_methods_i18n.invert), include_blank: OrderDetail.making_status_methods_i18n[order_detail.making_status_method] %>
+                <% else %>
+                  <%= f.select :making_status_method, options_for_select(OrderDetail.making_status_methods_i18n.invert), include_blank: OrderDetail.making_status_methods_i18n[order_detail.making_status_method] %>
+                <% end %>
+              </td>
+              <td style="vertical-align:middle;"><%= f.submit '更新', class:"btn btn-success" %></td>
+            </tr>
+            <% end %>
+        </tbody>
+      </table>
+  <% end %>
+      <div class="lead offset-1 col-3">
+        <div class="row justify-content-between" style="margin-left:40px;">
+          <div class="font-weight-bold">商品合計</div>
+          <div><%= @order.price.to_s(:delimited) %>円</div>
+        </div>
+        <div class="row justify-content-between" style="margin-left:40px;">
+          <div class="font-weight-bold">送料</div>
+          <div><%= @order.postage %>円</div>
+        </div>
+        <div class="row justify-content-between" style="margin-left:40px;">
+          <div class="font-weight-bold">請求金額合計</div>
+          <div class="font-weight-bold"><%= (@order.price + @order.postage).to_s(:delimited) %>円</div>
+        </div>
+      </div>
+    </div>
+</div>

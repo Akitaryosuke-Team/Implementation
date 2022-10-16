@@ -15,7 +15,7 @@
       <td><%= order_details.price * 1.1 %></td>
       <td><%= order_details.amount %></td>
       <td><%= order_details.price * 1.1 * order_details.amount %></td>
-      <td><%= f.select :maiking_status_method, options_from_collection_for_select(Order_details.maiking_status_methods, :id, :name)　%></td>
+      <td><%= select_tag :maiking_status_method, options_for_select(Order_details.maiking_status_methods)　%></td>
     </tr>
   </tbody>
 </table>

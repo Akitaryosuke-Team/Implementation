@@ -1,21 +1,34 @@
-<h2>ログイン</h2>
-
-  <h3>会員の方はこちらからログイン</h3>
-
-<%= form_with model: @public, url: public_session_path do |f| %>
-  <div class="field col-6">
-    <%= f.label :メールアドレス %>
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+<div class="mx-auto container">
+  <div class="d-flex justify-content-center font-weight-bold" style="background-color:#f5f5f5; font-size:25px; margin-bottom:30px; height:40px; width:170px;">
+    ログイン
   </div>
 
-  <div class="field col-6">
-    <%= f.label :パスワード %>
-    <%= f.password_field :password, autocomplete: "current-password" %>
+  <div class="d-flex justify-content-center lead font-weight-bold" style="background-color:#f5f5f5; margin-bottom:15px; margin-left:30px; height:30px; width:330px;">
+    会員の方はこちらからログイン
   </div>
 
-  <div class="actions col-9">
-    <%= f.submit "ログイン" %>
+  <%= form_with model: @customer, url: customer_session_path do |f| %>
+  <div class="form-group form-inline row">
+    <%= f.label :メールアドレス, class: "offset-1 col-2 d-flex justify-content-start lead font-weight-bold" %>
+    <div class="field col-7">
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "col-auto form-control form-control-lg w-100", placeholder: "sample@example.com" %>
+    </div>
   </div>
-<% end %>
 
-<%= render "publics/shared/links" %>
+  <div class="form-group form-inline row">
+    <%= f.label :パスワード, class: "offset-1 col-2 d-flex justify-content-start lead font-weight-bold" %>
+    <div class="field col-7">
+      <%= f.password_field :password, autocomplete: "current-password", class: "col-auto form-control form-control-lg w-100" %>
+    </div>
+  </div>
+
+    <div class="offset-2 actions col-3" style="margin-top:50px; margin-bottom:50px;">
+      <%= f.submit "ログイン", class: "offset-4 btn btn-primary w-75 font-weight-bold", style: "font-size:20px;" %>
+    </div>
+  <% end %>
+
+  <div class="d-flex justify-content-center lead font-weight-bold" style="background-color:#f5f5f5; margin-bottom:20px; margin-left:30px; height:30px; width:270px;">会員登録がお済でない方</div>
+    <div class="lead font-weight-bold">
+      <%= link_to "こちら", new_customer_registration_path, class: "offset-2" %>　から新規登録を行ってください。
+    </div>
+</div>

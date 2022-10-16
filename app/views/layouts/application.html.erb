@@ -11,71 +11,80 @@
   </head>
 
   <body class="d-flex flex-column vh-100">
-    <header class="shadow-sm">
+    <header class="border">
       <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
-          <a class="navbar-brand p-3" href="/"><%= "LOGO" %></a>
+          <a class="navbar-brand p-3 border d-flex justify-content-center align-items-center" href="/" style="width:200px; height:60px; font-size:30px; margin-top:40px"><%= "LOGO" %></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
                         aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ml-auto">
-            <% if public_signed_in? %>
-              <li>
-                <%= link_to "　マイページ" %>
+            <% if customer_signed_in? %>
+              <div style="margin-top:50px ;margin-right:50px;">ようこそ、<%= current_customer.first_name %>さん！</div>
+              <li class="border d-flex justify-content-center align-items-center" style="width:90px; height:45px; border-radius:10px; margin:20px;">
+                <%= link_to "マイページ", publics_customer_path(current_customer.id) %>
               </li>
-              <li>
-                <%= link_to "　商品一覧", publics_items_path %>
+              <li class="border d-flex justify-content-center align-items-center" style="width:90px; height:45px; border-radius:10px; margin:20px;">
+                <%= link_to "商品一覧", publics_items_path %>
               </li>
-              <li>
-                <%= link_to "　カート", publics_cart_items_path %>
+              <li class="border d-flex justify-content-center align-items-center" style="width:90px; height:45px; border-radius:10px; margin:20px;">
+                <%= link_to "カート", publics_cart_items_path %>
               </li>
-              <li>
-                <%= link_to "　ログアウト", destroy_public_session_path, method: :delete %>
+              <li class="border d-flex justify-content-center align-items-center" style="width:90px; height:45px; border-radius:10px; margin:20px;">
+                <%= link_to "ログアウト", destroy_customer_session_path, method: :delete %>
               </li>
             <% elsif admin_signed_in? %>
-              <li>
-                <%= link_to "　商品一覧", admins_items_path %>
+              <li class="border d-flex justify-content-center align-items-center" style="width:100px; height:45px; border-radius:10px; margin:20px;">
+                <%= link_to "商品一覧", admins_items_path %>
               </li>
-              <li>
-                <%= link_to "　会員一覧", admins_customers_path %>
+              <li class="border d-flex justify-content-center align-items-center" style="width:100px; height:45px; border-radius:10px; margin:20px;">
+                <%= link_to "会員一覧", admins_customers_path %>
               </li>
-              <li>
-                <%= link_to "　注文履歴一覧", admins_root_path %>
+              <li class="border d-flex justify-content-center align-items-center" style="width:100px; height:45px; border-radius:10px; margin:20px;">
+                <%= link_to "注文履歴一覧", admins_root_path %>
               </li>
-              <li>
-                <%= link_to "　ジャンル一覧", admins_genres_path %>
+              <li class="border d-flex justify-content-center align-items-center" style="width:100px; height:45px; border-radius:10px; margin:20px;">
+                <%= link_to "ジャンル一覧", admins_genres_path %>
               </li>
-              <li>
-                <%= link_to "　ログアウト", destroy_admin_session_path, method: :delete %>
+              <li class="border d-flex justify-content-center align-items-center" style="width:100px; height:45px; border-radius:10px; margin:20px;">
+                <%= link_to "ログアウト", destroy_admin_session_path, method: :delete %>
               </li>
             <% else %>
-              <li>
+              <li class="border d-flex justify-content-center align-items-center" style="width:90px; height:45px; border-radius:10px; margin:20px;">
                 <%= link_to "About", about_path %>
               </li>
-              <li>
-                <%= link_to "　商品一覧", publics_items_path %>
+              <li class="border d-flex justify-content-center align-items-center" style="width:90px; height:45px; border-radius:10px; margin:20px;">
+                <%= link_to "商品一覧", publics_items_path %>
               </li>
-              <li>
-                <%= link_to "　新規登録", new_public_registration_path %>
+              <li class="border d-flex justify-content-center align-items-center" style="width:90px; height:45px; border-radius:10px; margin:20px;">
+                <%= link_to "新規登録", new_customer_registration_path %>
               </li>
-              <li>
-                <%= link_to "　ログイン", new_public_session_path %>
-              </li>
-              <li>
-                <%= link_to "　管理者ログイン", new_admin_session_path %>
+              <li class="border d-flex justify-content-center align-items-center" style="width:90px; height:45px; border-radius:10px; margin:20px;">
+                <%= link_to "ログイン", new_customer_session_path %>
               </li>
             <% end %>
             </ul>
           </div>
         </div>
       </nav>
+      <div class="container">
+        <div class="row d-flex justify-content-end">
+          <div class="search_form" style="margin-bottom:20px;">
+            <%= form_with url: search_path, method: :get, local: true do |f| %>
+              <%= f.text_field :word, placeholder: "Search" %>
+              <%= f.submit "検索" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
     </header>
-    <main>
+    <main class="mb-auto">
     <%= yield %>
     </main>
-    <footer>
+    <footer class="border" style="height:100px;">
     </footer>
   </body>
 </html>

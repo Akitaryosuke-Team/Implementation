@@ -189,6 +189,7 @@ ja:
         production: "製作中"
         preparing: "発送準備中"
         sent: "発送済み"
+    order_detail:
       making_status_method:
         no_production: "製作不可"
         waiting_production: "製作待ち"

@@ -1,11 +1,16 @@
-<h2>ジャンル編集</h2>
+<div class="container" style="margin-top:30px;">
+  <div class="d-flex justify-content-center font-weight-bold" style="background-color:#f5f5f5; font-size:25px; margin-left:30px; height:40px; width:220px;">
+    ジャンル編集
+  </div>
   <%= form_with model: @genre, url: admins_genre_path, method: :patch do |f| %>
-    <div class="field">
-      <%= f.label :"ジャンル名" %>
-      <%= f.text_field :name %>
-    </div>
 
-    <div class="actions">
-      <%= f.submit '変更を保存' %>
+    <div class="form-group form-inline row d-flex align-items-center font-weight-bold" style="margin-top:80px;">
+      <%= f.label :ジャンル名, class: "col-auto d-flex justify-content-start" %>
+      <div class="field col-3">
+        <%= f.text_field :name, class: "col-auto form-control form-control-lg w-100 lead", placeholder: "ジャンル名" %>
+      </div>
+      <div class="lead">
+        <%= f.submit '変更を保存', class: "btn btn-success btn-lg font-weight-bold", style: "margin-left:50px; width:150px; height:50px;" %>
+      </div>
     </div>
   <% end %>

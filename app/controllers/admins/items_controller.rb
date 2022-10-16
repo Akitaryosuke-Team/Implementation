@@ -7,16 +7,15 @@ class Admins::ItemsController < ApplicationController
   def create
     @item = Item.new(item_params)
     @item.save
-    redirect_to admins_items_path
+    redirect_to admins_item_path(@item.id)
   end
 
   def index
-    @items = Item.all
+    @items = Item.page(params[:page]).per(10)
   end
 
   def show
     @item = Item.find(params[:id])
-    @genre = Genre.find(params[:id])
   end
 
   def edit

@@ -1,25 +1,33 @@
-<h2>ジャンル一覧・追加</h2>
+<div class="container" style="margin-top:30px;">
+  <div class="d-flex justify-content-center font-weight-bold" style="background-color:#f5f5f5; font-size:25px; margin-left:30px; height:40px; width:280px;">
+    ジャンル一覧・追加
+  </div>
   <%= form_with model: @genre, url: admins_genres_path, method: :post do |f| %>
-  <div class="field">
-    <%= f.label :"ジャンル名" %>
-    <%= f.text_field :name %>
+
+  <div class="form-group form-inline row d-flex align-items-center font-weight-bold" style="margin-top:80px;">
+    <%= f.label :ジャンル名, class: "col-auto d-flex justify-content-start" %>
+    <div class="field col-3">
+      <%= f.text_field :name, class: "col-auto form-control form-control-lg w-100 lead", placeholder: "ジャンル名" %>
+    </div>
+    <div class="lead">
+      <%= f.submit '新規登録', class: "btn btn-success btn-lg font-weight-bold", style: "margin-left:50px; width:180px; height:60px;" %>
+    </div>
   </div>
 
-  <div class="actions">
-    <%= f.submit '新規登録' %>
-  </div>
   <% end %>
 
-  <table>
+  <table class="col-4 table table-borderless border-bottom border-top" style="margin-top:50px;">
     <thead>
       <tr>
-        <th>ジャンル</th>
+        <th class="col-auto font-weight-bold bg-light" style="vertical-align:middle; width:220px;">ジャンル</th>
+        <th class="bg-light"></th>
       </tr>
     </thead>
     <tbody>
     <% @genres.each do |genre| %>
       <tr>
-        <td><%= genre.name %> <%= link_to "編集する", edit_admins_genre_path(genre.id) %></td>
+        <td class="d-flex align-items-center border-top" style="height:65px;"><%= genre.name %></td>
+        <td class="border-top"><%= link_to "編集する", edit_admins_genre_path(genre.id), class: "btn btn-success font-weight-bold", style: "width:120px; height:40px;" %></td>
       </tr>
     </tbody>
     <% end %>

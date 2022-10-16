@@ -1,2 +1,73 @@
-<h1>Publics::Orders#show</h1>
-<p>Find me in app/views/publics/orders/show.html.erb</p>
+<div class="container" style="margin-top:30px;">
+  <div class="offset-1 d-flex justify-content-center font-weight-bold" style="background-color:#f5f5f5; font-size:25px; margin-bottom:30px; height:40px; width:220px;">
+    注文履歴詳細
+  </div>
+
+<div class="row align-items-start">
+  <div class="col-7">
+    <div class="font-weight-bold">注文情報</div>
+      <table class="table table-bordered" style="margin-top:10px;">
+        <tr>
+          <th class="bg-light" style="vertical-align:middle; width:150px;">注文日</th>
+          <td><%= @order.created_at.strftime("%Y/%m/%d") %></td>
+        </tr>
+        <tr>
+          <th class="bg-light"style="vertical-align:middle; width:150px;">配送先</th>
+          <td>
+            〒<%= @order.postal_code %><br>
+            <%= @order.address %><br>
+            <%= @order.name %>
+          </td>
+        </tr>
+        <tr>
+          <th class="bg-light" style="vertical-align:middle; width:150px;">支払方法</th>
+          <td><%= Order.payment_methods_i18n[@order.payment_method] %></td>
+        </tr>
+        <tr>
+          <th class="bg-light" style="vertical-align:middle; width:150px;">ステータス</th>
+          <td><%= Order.status_methods_i18n[@order.status_method] %></td>
+        </tr>
+      </table>
+  </div>
+
+  <div class="col-4">
+    <div class="font-weight-bold">請求情報</div>
+      <table class="table table-bordered" style="margin-top:10px;">
+        <tr>
+          <th class="bg-light" style="vertical-align:middle;">商品合計</th>
+          <td><%= @order.price.to_s(:delimited) %></td>
+        </tr>
+        <tr>
+          <th class="bg-light" style="vertical-align:middle;">配送料</th>
+          <td><%= @order.postage %></td>
+        </tr>
+        <tr>
+          <th class="font-weight-bold bg-light" style="vertical-align:middle;">ご請求額</th>
+          <td><%= (@order.price + @order.postage).to_s(:delimited) %></td>
+        </tr>
+      </table>
+  </div>
+</div>
+
+  <div class="font-weight-bold">注文内容</div>
+    <table class="col-9 table table-bordered" style="margin-top:10px;">
+      <thead>
+        <tr>
+          <th class="bg-light" style="vertical-align:middle;">商品</th>
+          <th class="bg-light" style="vertical-align:middle; width:150px;">単価（税込）</th>
+          <th class="bg-light" style="vertical-align:middle; width:80px;">個数</th>
+          <th class="bg-light" style="vertical-align:middle; width:80px;">小計</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @order.order_details.each do |order_detail| %>
+        <tr>
+          <td><%= order_detail.item.name %></td>
+          <td><%= order_detail.price %></td>
+          <td><%= order_detail.amount %></td>
+          <td><%= order_detail.price * order_detail.amount %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+</div>
