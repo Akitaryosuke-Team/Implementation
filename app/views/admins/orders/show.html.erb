@@ -67,7 +67,7 @@
       <div class="lead offset-1 col-3">
         <div class="row justify-content-between" style="margin-left:40px;">
           <div class="font-weight-bold">商品合計</div>
-          <div><%= @order.price.to_s(:delimited) %>円</div>
+          <div><%= (@order.price - @order.postage).to_s(:delimited) %>円</div>
         </div>
         <div class="row justify-content-between" style="margin-left:40px;">
           <div class="font-weight-bold">送料</div>
@@ -75,7 +75,7 @@
         </div>
         <div class="row justify-content-between" style="margin-left:40px;">
           <div class="font-weight-bold">請求金額合計</div>
-          <div class="font-weight-bold"><%= (@order.price + @order.postage).to_s(:delimited) %>円</div>
+          <div class="font-weight-bold"><%= @order.price.to_s(:delimited) %>円</div>
         </div>
       </div>
     </div>
